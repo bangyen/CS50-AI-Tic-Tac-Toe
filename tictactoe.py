@@ -94,16 +94,14 @@ def minimax(board):
         return None
     Max = float("-inf")
     Min = float("inf")
+    func = Max_Value if player(board) == X else Min_Value
 
-    if player(board) == X:
-        return Max_Value(board, Max, Min)[1]
-    else:
-        return Min_Value(board, Max, Min)[1]
+    return func(board, Max, Min)[1]
 
 def Max_Value(board, Max, Min):
     move = None
     if terminal(board):
-        return [utility(board), None];
+        return [utility(board), None]
     v = float('-inf')
     for action in actions(board):
         test = Min_Value(result(board, action), Max, Min)[0]
@@ -113,12 +111,12 @@ def Max_Value(board, Max, Min):
             move = action
         if Max >= Min:
             break
-    return [v, move];
+    return [v, move]
 
 def Min_Value(board, Max, Min):
     move = None
     if terminal(board):
-        return [utility(board), None];
+        return [utility(board), None]
     v = float('inf')
     for action in actions(board):
         test = Max_Value(result(board, action), Max, Min)[0]
@@ -128,4 +126,4 @@ def Min_Value(board, Max, Min):
             move = action
         if Max >= Min:
             break
-    return [v, move];
+    return [v, move]
