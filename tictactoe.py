@@ -32,7 +32,7 @@ def actions(board):
     """
     return {
         (i, j) for i in range(3)
-        for j in range(3) if board[i][j]
+        for j in range(3) if not board[i][j]
     }
 
 
