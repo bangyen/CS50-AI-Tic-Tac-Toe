@@ -53,17 +53,15 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
+    trans = [board[i][j] for j in range(3) for i in range(3)]
+    win_list = [[X] * 3, [O] * 3]
+    
     for i in range(3):
-        if board[i] == [X] * 3:
-            return X
-        elif board[i] == [O] * 3:
-            return O
+        if board[i] in win_list:
+            board[i][0]
     for j in range(3):
-        col = [board[i][j] for i in range(3)]
-        if col == [X] * 3:
-            return X
-        elif col == [O] * 3:
-            return O
+        if trans[j] in win_list:
+            return trans[j][0]
     if board[0][0] == board[1][1] == board[2][2]:
         return board[0][0]
     if board[2][0] == board[1][1] == board[0][2]:
@@ -76,12 +74,8 @@ def terminal(board):
     """
     if winner(board) in [X, O]:
         return True
-        
-    for i in range(3):
-        for j in range(3):
-            if  board[i][j] == None:
-                return False
-    return True
+    
+    return all(all(row) for row in board)
 
 
 
@@ -89,12 +83,7 @@ def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    if winner(board) == X:
-        return 1
-    elif winner(board) == O:
-        return -1
-    else:
-        return 0
+    return (winner(board) == X) - (winner(board) == O)
 
 
 def minimax(board):
